@@ -14,6 +14,7 @@ app.use(cors());
 
 const AgencyRoutes = require("./routes/Agency");
 const ClientRoutes = require("./routes/Client");
+const UserRoutes = require("./routes/User");
 const ErrorMiddleWare = require("./middlewares/ErrorMiddleWare");
 const { verifyToken } = require("./middlewares/Auth");
 
@@ -26,8 +27,9 @@ mongoose
     console.log("Error in connection");
   });
 
-app.use("/agency", AgencyRoutes);
-app.use("/client", ClientRoutes);
+app.use("/agency", verifyToken, AgencyRoutes);
+app.use("/client", verifyToken, ClientRoutes);
+app.use("/user", UserRoutes);
 
 // app.use(function (error, req, res, next) {
 //   const status = error.status || 500;
